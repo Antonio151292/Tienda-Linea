@@ -15,10 +15,13 @@ use App\Http\Controllers\ProductoController;
 |
 */
 Route::get('/','App\Http\Controllers\Inicio@iniciar');
+Route::get('/cerrarSesion','App\Http\Controllers\Inicio@cerrarSesion');
 
 Route::post('/guardarUser', 'App\Http\Controllers\Inicio@guardarUser');
 Route::post('/SesionIniciada', 'App\Http\Controllers\Inicio@SesionIniciada');
+Route::post('/eliminar', 'App\Http\Controllers\Inicio@eliminar');
 Route::post('/agregarCarrito', 'App\Http\Controllers\Inicio@guardarCarrito');
+Route::post('/guardarProductoCarrito', 'App\Http\Controllers\Inicio@guardarCarrito');
 Route::get('/camisas','App\Http\Controllers\Camisas@iniciar');
 
 Route::get("/carrito",function(){
@@ -50,3 +53,7 @@ Route::get('/addProducto','App\Http\Controllers\Producto@iniciar');
 Route::post('/addProducto','App\Http\Controllers\Producto@addProducto');
  */
 Route::resource('/inventario',ProductoController::class);
+
+Route::get('/perfil',function(){
+    return view('perfil');    
+});

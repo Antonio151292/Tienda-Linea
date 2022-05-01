@@ -54,8 +54,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div>
-					<input type="submit"  value="Cerrar Sesion" />
+					<form action="/cerrarSesion" method="get">
+						<input type="submit"  value="Cerrar Sesion" />
+					</form>
 				</div>
+				<div>
+					@isset($nombre)
+					<a href="perfil?variable=<?php echo urlencode($nombre);?>">Ver mi Perfil</a>
+					<?php echo $nombre; ?>
+					@endisset
+				</div>				
 			</div>
 		</div>
 	</div>
@@ -131,6 +139,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		</div>
 	</div>
 	@empty($nombre)
+	
 	<script>
 		$('#myModal88').modal('show');
 	</script>
@@ -149,6 +158,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class='w31_login'>
 				<p>{{$nombre}}</p>
 			</div>
+			 
 			@endisset
 			<div class="w3l_logo">
 				<h1><a href="index.php">CHEIN<span>Lo mejor en moda</span></a></h1>
@@ -286,11 +296,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<div class="simpleCart_shelfItem">
 									<!-- precio -->
 								<p><span>$320</span> <i class="item_price">$ {{$producto-> precio }}</i></p>
-								<form action="/index.blade.php" method="POST">
-									<input type="hidden" name="idProducto" value="{{$producto->id}}">
-									<input type="submit" value="Agregar al carrito" class="item_add" name="btnGuardar">
-								</form>
-								<p><a class="item_add" href="/agregarcarrito">Agregar al carrito</a></p>
+								<p><a class="item_add" href="/index.php?addCarrito&id={{$producto->id}}">Agregar al carrito</a></p>
 								<p><a class="item_add" href="#">Apartar Producto</a></p>
 							</div>
 						</div>
@@ -366,10 +372,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 <?php
-    if(isset($_REQUEST["btnGuardar"])){
-        $id = $_POST['idProducto'];
-        $_SESSION['productos']['id'] = $id;
-		echo "<script>alert('Producto $id agregado con exito');</script>";
-    }
+if(isset($_REQUEST['action']) && !empty($_REQUEST['action'])){
+	if($_REQUEST['action'] == 'addToCart' && !empty($_REQUEST['id'])){
+		$productID = $_REQUEST['id'];
+	}
+}
 	
 ?>
